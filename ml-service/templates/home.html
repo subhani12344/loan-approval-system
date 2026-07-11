@@ -136,9 +136,37 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
         }
+
+        .header {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--accent-glow);
+            color: var(--accent-glow);
+            text-decoration: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-glow);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
     </style>
 </head>
 <body>
+    <div class="header">
+        <a href="/predict-form" class="nav-btn">Predict</a>
+    </div>
     <div class="container">
         <div class="card">
             <h1>Human Development Index (HDI) System</h1>

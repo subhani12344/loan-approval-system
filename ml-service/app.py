@@ -43,7 +43,7 @@ def home():
 
 @app.route('/predict-form', methods=['GET'])
 def predict_form():
-    return render_template('index.html', prediction=None)
+    return render_template('indexnew.html', prediction=None)
 
 @app.route('/health', methods=['GET'])
 def health():
@@ -68,7 +68,7 @@ def predict():
             gni_capita = float(request.form.get('gni_capita', 10000))
             
             if regression_pipeline is None:
-                return render_template('index.html', prediction="Error: ML regression model not loaded on server")
+                return render_template('indexnew.html', prediction="Error: ML regression model not loaded on server")
                 
             input_data = pd.DataFrame([{
                 'Country': country,
@@ -85,11 +85,11 @@ def predict():
             pred_hdi_rounded = max(min(pred_hdi_rounded, 1.0), 0.0)
             
             print(f"Regression prediction computed: hdi={pred_hdi_rounded:.4f}")
-            return render_template('index.html', prediction=pred_hdi_rounded)
+            return render_template('indexnew.html', prediction=pred_hdi_rounded)
             
         except Exception as e:
             print(f"Regression prediction failed: {e}")
-            return render_template('index.html', prediction=f"Error: {e}")
+            return render_template('indexnew.html', prediction=f"Error: {e}")
 
     # Otherwise, handle JSON API POST request (For Express dashboard predictions)
     if model_pipeline is None:
