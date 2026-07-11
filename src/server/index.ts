@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static frontend files (resilient fallback for dev vs. compiled dist runs)
-const publicPath = fs.existsSync(path.join(__dirname, '../public'))
+const publicPath = fs.existsSync(path.join(__dirname, '../public/index.html'))
   ? path.join(__dirname, '../public')
   : path.join(__dirname, '../../src/public');
 app.use(express.static(publicPath));

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server/index.js",
     "dev": "nodemon --watch src -e ts,json --exec ts-node src/server/index.ts",
-    "build": "tsc",
+    "build": "tsc && node copyAssets.js",
     "test": "jest",
     "lint": "eslint src/",
     "format": "prettier --write src/",
