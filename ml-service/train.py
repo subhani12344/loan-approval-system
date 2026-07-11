@@ -2,6 +2,10 @@ import os
 import pickle
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -109,6 +113,33 @@ def main():
         pickle.dump(payload, f)
         
     print(f"\nModel pipeline successfully serialized and saved to: {os.path.abspath(model_path)}")
+    
+    # Generate statistical visualizations
+    print("\nGenerating statistical visualizations...")
+    plots_dir = os.path.join(model_dir, 'plots')
+    os.makedirs(plots_dir, exist_ok=True)
+    
+    # 1. Correlation Heatmap
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+    plt.title('Feature Correlation Heatmap')
+    plt.tight_layout()
+    heatmap_path = os.path.join(plots_dir, 'correlation_heatmap.png')
+    plt.savefig(heatmap_path)
+    plt.close()
+    
+    # 2. Credit Score Strip Plot
+    plt.figure(figsize=(8, 6))
+    sns.stripplot(x='approved', y='credit_score', data=df, hue='approved', palette='Set1', alpha=0.5, jitter=0.25)
+    plt.title('Credit Score Distribution vs. Loan Approval Status')
+    plt.xlabel('Approved (0 = Rejected, 1 = Approved)')
+    plt.ylabel('Credit Score')
+    plt.tight_layout()
+    stripplot_path = os.path.join(plots_dir, 'credit_score_strip_plot.png')
+    plt.savefig(stripplot_path)
+    plt.close()
+    
+    print(f"Visualizations successfully saved to: {os.path.abspath(plots_dir)}")
 
 if __name__ == '__main__':
     main()
