@@ -39,3 +39,9 @@ yarn-error.log*
 next-env.d.ts
 /dist
 
+# python venv & cache
+.venv/
+ml-service/.venv/
+__pycache__/
+*.pyc
+
