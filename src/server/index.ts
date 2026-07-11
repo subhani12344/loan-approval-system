@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
+import fs from 'fs';
 import { connectDB } from '../config/db';
 import loanRoutes from './routes/loanRoutes';
 
@@ -33,8 +34,11 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '../public')));
+// Serve static frontend files (resilient fallback for dev vs. compiled dist runs)
+const publicPath = fs.existsSync(path.join(__dirname, '../public'))
+  ? path.join(__dirname, '../public')
+  : path.join(__dirname, '../../src/public');
+app.use(express.static(publicPath));
 
 // Rate Limiting
 const limiter = rateLimit({
