@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HDI Credit Oracle | AI-Powered Financial Risk Assessment</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/index.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Background Glows -->
+  <div class="glow-bg glow-1"></div>
+  <div class="glow-bg glow-2"></div>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <h1>HDI Credit Oracle</h1>
+          <span class="sub-logo">AI Risk & HDI Metrics Assessment</span>
+        </div>
+      </div>
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-label">Production Server Live</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    
+    <!-- KPI Section -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Applications</span>
+          <i data-lucide="file-text" class="kpi-icon text-purple"></i>
+        </div>
+        <div class="kpi-value" id="kpi-total">-</div>
+        <div class="kpi-sub">Lifetime applications analyzed</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Approval Rate</span>
+          <i data-lucide="percent" class="kpi-icon text-emerald"></i>
+        </div>
+        <div class="kpi-value" id="kpi-approval">-</div>
+        <div class="kpi-sub" id="kpi-approval-sub">Calculated probability thresholds</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Average Credit Score</span>
+          <i data-lucide="gauge" class="kpi-icon text-amber"></i>
+        </div>
+        <div class="kpi-value" id="kpi-credit">-</div>
+        <div class="kpi-sub">Standard FICO distribution</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Average Loan Request</span>
+          <i data-lucide="dollar-sign" class="kpi-icon text-blue"></i>
+        </div>
+        <div class="kpi-value" id="kpi-amount">-</div>
+        <div class="kpi-sub">Requested finance amount</div>
+      </div>
+    </section>
+
+    <!-- Main Content Workspace -->
+    <div class="workspace-grid">
+      
+      <!-- Application Form Panel -->
+      <section class="panel-card form-panel">
+        <div class="panel-header">
+          <h2>New Loan Application</h2>
+          <p>Provide borrower parameters below to compute AI prediction</p>
+        </div>
+
+        <form id="loan-form" class="loan-form">
+          <div class="form-group">
+            <label for="borrowerName">Borrower Name</label>
+            <div class="input-wrapper">
+              <i data-lucide="user" class="input-icon"></i>
+              <input type="text" id="borrowerName" placeholder="John Doe" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="age">Age</label>
+              <div class="input-wrapper">
+                <input type="number" id="age" min="18" max="100" placeholder="30" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="creditScore">FICO Credit Score (300-850)</label>
+              <div class="input-wrapper">
+                <input type="number" id="creditScore" min="300" max="850" placeholder="720" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="income">Annual Income ($)</label>
+              <div class="input-wrapper">
+                <input type="number" id="income" min="0" placeholder="75000" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="loanAmount">Loan Amount Requested ($)</label>
+              <div class="input-wrapper">
+                <input type="number" id="loanAmount" min="0" placeholder="15000" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="loanTerm">Loan Term</label>
+            <div class="select-wrapper">
+              <select id="loanTerm" required>
+                <option value="12">12 Months (1 Year)</option>
+                <option value="24">24 Months (2 Years)</option>
+                <option value="36" selected>36 Months (3 Years)</option>
+                <option value="60">60 Months (5 Years)</option>
+                <option value="120">120 Months (10 Years)</option>
+              </select>
+              <i data-lucide="chevron-down" class="select-chevron"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="hdi-label-container">
+              <label for="hdiIndex">Human Development Index (HDI) of Area</label>
+              <span id="hdi-value-badge" class="hdi-val-badge">0.75</span>
+            </div>
+            <input type="range" id="hdiIndex" min="0.30" max="1.00" step="0.01" value="0.75" class="hdi-slider">
+            <div class="hdi-hints">
+              <span>Developing (0.3)</span>
+              <span>Medium (0.7)</span>
+              <span>Developed (0.95)</span>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-btn" class="submit-button">
+            <span>Calculate Prediction Verdict</span>
+            <i data-lucide="arrow-right" class="btn-arrow"></i>
+            <span class="loader-spinner hidden"></span>
+          </button>
+        </form>
+      </section>
+
+      <!-- History Panel -->
+      <section class="panel-card list-panel">
+        <div class="panel-header">
+          <div class="list-title-row">
+            <h2>Analytical Log</h2>
+            <button id="refresh-btn" class="icon-button" title="Refresh Application Log">
+              <i data-lucide="rotate-cw"></i>
+            </button>
+          </div>
+          <p>Recent credit risk predictions and scoring audit trail</p>
+        </div>
+
+        <div class="loan-list-container">
+          <div id="loading-skeleton" class="skeleton-list hidden">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+          </div>
+          
+          <div id="empty-state" class="empty-state">
+            <i data-lucide="folder-open" class="empty-icon"></i>
+            <h3>No applications analyzed yet</h3>
+            <p>Fill out the application form on the left to invoke the HSL prediction engine.</p>
+          </div>
+
+          <ul id="loan-list" class="loan-list">
+            <!-- List items dynamically injected -->
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Modal detail view -->
+  <div id="verdict-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button id="close-modal-btn" class="close-modal-btn">
+        <i data-lucide="x"></i>
+      </button>
+
+      <div class="modal-header">
+        <div class="verdict-icon-container" id="modal-verdict-badge">✔</div>
+        <div class="modal-titles">
+          <h3 id="modal-borrower-name">-</h3>
+          <p>Credit Risk Verdict & Breakdown</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Probability Ring or Progress -->
+        <div class="progress-bar-container">
+          <div class="progress-info">
+            <span>Probability of Approval</span>
+            <span id="modal-probability-val">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="modal-probability-fill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Metric Details -->
+        <div class="modal-detail-grid">
+          <div class="detail-box">
+            <span class="detail-label">Status</span>
+            <span class="detail-value text-emerald" id="modal-status">-</span>
+          </div>
+          <div class="detail-box">
+            <span class="detail-label">Risk Rating</span>
+            <span class="detail-value text-amber" id="modal-risk-rating">-</span>
+          </div>
+          <div class="detail-box">
+            <span class="detail-label">FICO Score</span>
+            <span class="detail-value" id="modal-credit-score">-</span>
+          </div>
+          <div class="detail-box">
+            <span class="detail-label">HDI Index</span>
+            <span class="detail-value" id="modal-hdi-index">-</span>
+          </div>
+          <div class="detail-box">
+            <span class="detail-label">Loan Request</span>
+            <span class="detail-value" id="modal-loan-amount">-</span>
+          </div>
+          <div class="detail-box">
+            <span class="detail-label">Monthly Payment</span>
+            <span class="detail-value" id="modal-monthly-payment">-</span>
+          </div>
+        </div>
+
+        <div class="modal-verdict-card" id="modal-recommendation-card">
+          <h4 id="verdict-title">Model Risk Assessment</h4>
+          <p id="verdict-description">Loading risk notes...</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="/app.js"></script>
+</body>
+</html>

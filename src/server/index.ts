@@ -5,7 +5,9 @@ import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import path from 'path';
 import { connectDB } from '../config/db';
+import loanRoutes from './routes/loanRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -17,7 +19,11 @@ const PORT = process.env.PORT || 3000;
 connectDB();
 
 // Global Middlewares
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false // Disable default strict CSP to allow CDNs for styles, scripts, and fonts
+  })
+);
 app.use(cors({
   origin: process.env.CORS_ORIGIN || '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -26,6 +32,9 @@ app.use(cors({
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Rate Limiting
 const limiter = rateLimit({
@@ -36,6 +45,9 @@ const limiter = rateLimit({
   message: { message: 'Too many requests from this IP, please try again later.' }
 });
 app.use('/api/', limiter);
+
+// Mount API Routes
+app.use('/api/loans', loanRoutes);
 
 // Health Check Endpoint
 app.get('/health', (_req: Request, res: Response) => {
