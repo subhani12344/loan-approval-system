@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDI Prediction Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-glow: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #0ea5e9, #2563eb);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: var(--bg-color);
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.15) 0%, transparent 45%);
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 2rem auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-gradient);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        select, input {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.85rem;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-glow);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            background: var(--accent-gradient);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-glow);
+        }
+
+        /* Result Panel */
+        .result-panel {
+            margin-top: 2rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px dashed var(--accent-glow);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-glow);
+            margin: 0.5rem 0;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .result-tier {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2>HDI Estimator Form</h2>
+            <form action="/predict" method="POST">
+                <div class="form-group">
+                    <label for="country">Select Country Group Index</label>
+                    <select name="country" id="country">
+                        <option value="184">United States (Index 184)</option>
+                        <option value="183">United Kingdom (Index 183)</option>
+                        <option value="76">India (Index 76)</option>
+                        <option value="35">China (Index 35)</option>
+                        <option value="64">Germany (Index 64)</option>
+                        <option value="31">Canada (Index 31)</option>
+                        <option value="8">Australia (Index 8)</option>
+                        <option value="0">Afghanistan (Index 0)</option>
+                        <option value="23">Brazil (Index 23)</option>
+                        <option value="167">South Africa (Index 167)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="life_expectancy">Life Expectancy at Birth (Years)</label>
+                    <input type="number" step="0.1" name="life_expectancy" id="life_expectancy" min="40" max="95" value="78.5" required>
+                </div>
+                <div class="form-group">
+                    <label for="mean_schooling">Mean Years of Schooling (Years)</label>
+                    <input type="number" step="0.1" name="mean_schooling" id="mean_schooling" min="1" max="18" value="12.2" required>
+                </div>
+                <div class="form-group">
+                    <label for="expected_schooling">Expected Years of Schooling (Years)</label>
+                    <input type="number" step="0.1" name="expected_schooling" id="expected_schooling" min="2" max="22" value="15.8" required>
+                </div>
+                <div class="form-group">
+                    <label for="gni_capita">Gross National Income (GNI) per Capita (USD)</label>
+                    <input type="number" name="gni_capita" id="gni_capita" min="500" max="130000" value="45000" required>
+                </div>
+                
+                <button type="submit" class="btn">Calculate Predicted HDI</button>
+            </form>
+
+            {% if prediction is not none %}
+            <div class="result-panel">
+                <div class="result-tier">ESTIMATED HUMAN DEVELOPMENT INDEX</div>
+                <div class="result-score">{{ prediction }}</div>
+                <div class="result-tier">
+                    Development Category: 
+                    <strong>
+                        {% if prediction >= 0.800 %}
+                            Very High
+                        {% elif prediction >= 0.700 %}
+                            High
+                        {% elif prediction >= 0.550 %}
+                            Medium
+                        {% else %}
+                            Low
+                        {% endif %}
+                    </strong>
+                </div>
+            </div>
+            {% endif %}
+
+            <a href="/" class="back-link">&larr; Return to Intelligence Home</a>
+        </div>
+    </div>
+</body>
+</html>

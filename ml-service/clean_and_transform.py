@@ -34,8 +34,10 @@ def clean_and_transform():
             hdi_score_col_idx = 1
             print(f"\nTarget Variable (Y) selected from index 1: '{Y.name}'")
 
-    # Independent Variables (X) - we select all other columns
-    X = df.drop(columns=[Y.name])
+    # Independent Variables (X) - we select core human development indicators
+    core_features = ['Country', 'Life Expectancy', 'Mean Years of Schooling', 'Expected Years of Schooling', 'GNI per Capita']
+    selected_features = [col for col in core_features if col in df.columns]
+    X = df[selected_features]
     print(f"Independent Variables (X) shape: {X.shape[0]} rows, {X.shape[1]} columns")
     
     # 2. Count Null Values in X
